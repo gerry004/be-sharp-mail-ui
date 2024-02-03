@@ -1,10 +1,7 @@
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useState } from 'react';
 
-function Editor ({onEditorChange}) {
-  const [editorHtml, setEditorHtml] = useState('');
-
+function Editor({ editorHtml, onEditorChange }) {
   const modules = {
     toolbar: [
       [{ 'header': [1, 2, 3, false] }],
@@ -19,11 +16,6 @@ function Editor ({onEditorChange}) {
     'list', 'bullet',
   ];
 
-  const handleChange = (html) => {
-    setEditorHtml(html);
-    onEditorChange(html);
-  }
-
   return (
     <div>
       <ReactQuill
@@ -31,7 +23,7 @@ function Editor ({onEditorChange}) {
         modules={modules}
         formats={formats}
         value={editorHtml}
-        onChange={handleChange}
+        onChange={onEditorChange(editorHtml)}
       />
     </div>
   )
