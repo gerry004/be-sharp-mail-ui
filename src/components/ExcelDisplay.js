@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
-
-const ExcelDisplay = ({ data, appendToHtml }) => {
-  const [selectedKey, setSelectedKey] = useState(null);
+const ExcelDisplay = ({ 
+  data, 
+  appendToHtml, 
+  setRecipientEmail, 
+  selectedKey, 
+  setSelectedKey 
+}) => {
 
   if (!data || Object.keys(data).length === 0) {
-    return <p>No data to display.</p>;
+    return;
   }
 
   return (
     <div className="flex my-2 mb-2">
-      <div>
+      <div className="mr-2">
         <label className="block text-sm font-medium text-gray-600">Choose Sheet:</label>
         <select
           className="border border-gray-300 rounded p-2"
@@ -23,6 +26,23 @@ const ExcelDisplay = ({ data, appendToHtml }) => {
           ))}
         </select>
       </div>
+      
+      {selectedKey && data[selectedKey] && data[selectedKey].length > 0 && (
+      <div>
+        <label className="block text-sm font-medium text-gray-600">Recipient Email:</label>
+        <select
+          className="border border-gray-300 rounded p-2"
+          onChange={(e) => setRecipientEmail(e.target.value)}
+        >
+          <option value="">Select...</option>
+          {data[selectedKey].map((value, index) => (
+            <option key={index} value={value}>
+              {value}
+            </option>
+          ))}
+        </select>
+      </div>
+      )}
 
       {selectedKey && data[selectedKey] && data[selectedKey].length > 0 && (
         <div>

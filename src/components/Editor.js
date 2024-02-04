@@ -23,7 +23,7 @@ function Editor({ editorHtml, onEditorChange }) {
         modules={modules}
         formats={formats}
         value={editorHtml}
-        onChange={onEditorChange(editorHtml)}
+        onChange={(content) => onEditorChange(content)}
       />
     </div>
   )
