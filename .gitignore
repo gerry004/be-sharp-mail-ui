@@ -1,6 +1,8 @@
 # Node.js
 node_modules/
 
+build/
+
 # Logs
 logs
 *.log
