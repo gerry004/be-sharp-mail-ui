@@ -15,6 +15,7 @@ function AutomatedEmailView() {
   const [editorHtml, setEditorHtml] = useState('');
   const [subject, setSubject] = useState('');
   const [testRecipientEmail, setTestRecipientEmail] = useState('');
+  const [previewEmail, setPreviewEmail] = useState(null);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -57,13 +58,13 @@ function AutomatedEmailView() {
     setEditorHtml((prevHtml) => prevHtml + `{{${variable}}}`);
   }
 
-  const handleSendEmails = (isTest = true) => {
+  const handleSendEmails = (type = "preview") => {
     if (!file) return alert('Please select a file.');
     if (!selectedSheet) return alert('Please select a sheet.');
     if (!recipientEmailHeader) return alert('Please select a recipient email header.');
     if (!subject) return alert('Please enter a subject.');
     if (!editorHtml) return alert('Please enter a message.');
-    if (isTest && !testRecipientEmail) return alert('Please enter a test recipient email.');
+    if (type === "test" && !testRecipientEmail) return alert('Please enter a test recipient email.');
 
     const formData = new FormData();
     formData.append('file', file);
@@ -71,9 +72,14 @@ function AutomatedEmailView() {
     formData.append('recipientEmailExcelColumn', recipientEmailHeader);
     formData.append('subject', subject);
     formData.append('messageHtml', editorHtml);
-    formData.append('isTest', isTest);
+    formData.append('type', type);
+    formData.append('testRecipientEmail', testRecipientEmail);
     api.post('/email', formData)
-      .then(response => console.log("Email Successfully Sent"))
+      .then(response => {
+        if (type === "preview") {
+          setPreviewEmail(response.data);
+        }
+      })
       .catch(error => console.error('Error sending email:', error.message));
   }
 
@@ -123,8 +129,34 @@ function AutomatedEmailView() {
 
         <label className="block text-sm font-medium text-gray-600">Message:</label>
         <Editor editorHtml={editorHtml} onEditorChange={handleEditorChange} />
-        <button className="bg-blue-500 text-white rounded p-2 mr-2" onClick={handleSendEmails}>Send Test Email</button>
-        <button className="bg-blue-500 text-white rounded p-2" onClick={() => handleSendEmails(false)}>Send Emails</button>
+        <button className="bg-blue-500 text-white rounded p-2 mr-2" onClick={() => handleSendEmails("preview")}>Preview Email</button>
+        <button className="bg-blue-500 text-white rounded p-2 mr-2" onClick={() => handleSendEmails("test")}>Send Test Email</button>
+        <button className="bg-blue-500 text-white rounded p-2" onClick={() => handleSendEmails("live")}>Send Emails</button>
+        {previewEmail && (
+          <div className="bg-gray-100 p-4 rounded-md shadow-md my-4">
+            <h2 className="text-2xl font-bold mb-4">Preview Email:</h2>
+            <table className="w-full">
+              <tbody>
+                <tr>
+                  <td className="font-bold pr-2">Selected Sheet:</td>
+                  <td className="text-gray-700">{previewEmail.selectedSheet}</td>
+                </tr>
+                <tr>
+                  <td className="font-bold pr-2">Email Recipient Column:</td>
+                  <td className="text-gray-700">{previewEmail.recipientEmailExcelColumn}</td>
+                </tr>
+                <tr>
+                  <td className="font-bold pr-2">Subject:</td>
+                  <td className="text-gray-700">{previewEmail.subject}</td>
+                </tr>
+                <tr>
+                  <td className="font-bold pr-2">Message HTML:</td>
+                  <td className="text-gray-700">{previewEmail.updatedMessageHtml}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );
