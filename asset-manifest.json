@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/be-sharp-mail-ui/static/css/main.519d440c.css",
-    "main.js": "/be-sharp-mail-ui/static/js/main.d25b2bbf.js",
+    "main.js": "/be-sharp-mail-ui/static/js/main.c8da88bb.js",
     "static/js/592.918a8bb2.chunk.js": "/be-sharp-mail-ui/static/js/592.918a8bb2.chunk.js",
     "index.html": "/be-sharp-mail-ui/index.html",
     "main.519d440c.css.map": "/be-sharp-mail-ui/static/css/main.519d440c.css.map",
-    "main.d25b2bbf.js.map": "/be-sharp-mail-ui/static/js/main.d25b2bbf.js.map",
+    "main.c8da88bb.js.map": "/be-sharp-mail-ui/static/js/main.c8da88bb.js.map",
     "592.918a8bb2.chunk.js.map": "/be-sharp-mail-ui/static/js/592.918a8bb2.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.519d440c.css",
-    "static/js/main.d25b2bbf.js"
+    "static/js/main.c8da88bb.js"
   ]
 }
