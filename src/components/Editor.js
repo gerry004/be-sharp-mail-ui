@@ -17,7 +17,7 @@ function Editor({ editorHtml, onEditorChange }) {
   ];
 
   return (
-    <div>
+    <div className="my-2">
       <ReactQuill
         theme="snow"
         modules={modules}

@@ -1,12 +1,12 @@
-function FileInput({ onFileChange }) {
+function FileInput({ label="Choose File:", accept="", updateFile }) {
   return (
-    <div className="mb-4">
-      <label className="block text-sm font-medium text-gray-600">Choose Excel File (.xlsx):</label>
+    <div className="my-2">
+      <label className="block text-sm font-medium text-gray-600">{label}</label>
       <input
         type="file"
-        onChange={onFileChange}
-        accept=".xlsx"
-        className="mt-1 p-2 border border-gray-300 rounded-md"
+        onChange={updateFile}
+        accept={accept}
+        className="p-2 border border-gray-300 rounded-md"
       />
     </div>
   )
